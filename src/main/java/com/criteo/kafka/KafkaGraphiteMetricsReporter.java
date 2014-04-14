@@ -74,6 +74,9 @@ public class KafkaGraphiteMetricsReporter implements KafkaMetricsReporter,
             graphitePort = props.getInt("kafka.graphite.metrics.port", GRAPHITE_DEFAULT_PORT);
             graphiteGroupPrefix = props.getString("kafka.graphite.metrics.group", GRAPHITE_DEFAULT_PREFIX);
             String regex = props.getString("kafka.graphite.metrics.exclude.regex", null);
+
+            LOG.debug("Initialize GraphiteReporter ["+graphiteHost+","+graphitePort+","+graphiteGroupPrefix+"]");
+
             if (regex != null) {
             	predicate = new RegexMetricPredicate(regex);
             }
@@ -91,6 +94,7 @@ public class KafkaGraphiteMetricsReporter implements KafkaMetricsReporter,
             if (props.getBoolean("kafka.graphite.metrics.reporter.enabled", false)) {
             	initialized = true;
             	startReporter(metricsConfig.pollingIntervalSecs());
+                LOG.debug("GraphiteReporter started.");
             }
         }
 	}
